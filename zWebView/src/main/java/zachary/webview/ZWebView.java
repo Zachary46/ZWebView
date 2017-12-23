@@ -117,12 +117,16 @@ public class ZWebView extends RelativeLayout{
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                mTitleListener.getTitle(title);
+                if (mTitleListener!=null){
+                    mTitleListener.getTitle(title);
+                }
             }
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                mProgressListener.getProgress(newProgress);
+                if (mProgressListener!=null){
+                    mProgressListener.getProgress(newProgress);
+                }
                 if(newProgress==100){
                     pg.setVisibility(View.GONE);//加载完网页进度条消失
                 }

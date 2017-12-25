@@ -2,9 +2,7 @@ package zachary.zwebview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import zachary.webview.ZWeb;
 import zachary.webview.ZWebView;
@@ -34,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         ZWeb.with(this)
             .addParentView(ll)
-            .setBackgroundRes(R.drawable.progress_drawable)
-            .addTitleListener(new ZWeb.TitleListener() {
+           // .setBackgroundRes(R.drawable.progress_drawable)
+            /*.addTitleListener(new ZWeb.TitleListener() {
                 @Override
                 public void getTitle(String title) {
                     Toast.makeText(MainActivity.this,title,Toast.LENGTH_LONG).show();
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 public void getProgress(int progress) {
                     Log.d("MainActivityy", "=========progress:" + progress);
                 }
-            })
+            })*/
             .setUrl("https://qpay.qq.com/qr/5604c201")
             .go();
     }

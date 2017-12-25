@@ -35,7 +35,9 @@ public class ZWebView extends RelativeLayout{
         super(context);
         mContext=context;
         mUrl=zWeb.url;
-        mBackgroudColor=zWeb.res;
+        if (zWeb.res!=0){
+            mBackgroudColor=zWeb.res;
+        }
         mViewGroup=zWeb.viewGroup;
         mTitleListener=zWeb.titleListener;
         mProgressListener=zWeb.progressListener;

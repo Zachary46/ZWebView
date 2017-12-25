@@ -20,13 +20,13 @@ LinearLayout rootView= (LinearLayout) findViewById(R.id.ll);
                 .addTitleListener(new ZWeb.TitleListener() {
                     @Override
                     public void getTitle(String title) {
-                        Toast.makeText(MainActivity.this,title,Toast.LENGTH_LONG).show();
+                       
                     }
                 })
                 .addProgressListener(new ZWeb.ProgressListener() {
                     @Override
                     public void getProgress(int progress) {
-                        Log.d("MainActivityy", "=========progress:" + progress);
+                        
                     }
                 })
                 .setUrl("https://www.github.com/Zachary46")

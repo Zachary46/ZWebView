@@ -1,7 +1,7 @@
 # ZWebView
 ### 一个支持H5调起微信、支付宝、QQ的Webview
 # 添加依赖
-`compile 'com.github.Zachary46:ZWebView:v1.0'`
+`compile 'com.github.Zachary46:ZWebView:v1.1'`
 # 添加仓库
 ```
 allprojects {

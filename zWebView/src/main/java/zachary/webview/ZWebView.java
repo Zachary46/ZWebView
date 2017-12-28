@@ -2,7 +2,6 @@ package zachary.webview;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -14,6 +13,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Author: Zachary
@@ -49,28 +51,24 @@ public class ZWebView extends RelativeLayout{
         View view = LayoutInflater.from(mContext).inflate(R.layout._main, mViewGroup);
         webView = (WebView) view.findViewById(R.id.wv);
         pg= (ProgressBar) view.findViewById(R.id.pg);
-        // 设置编码
-        webView.getSettings().setDefaultTextEncodingName("utf-8");
-        webView.getSettings().setTextZoom(100);
-        // 设置背景颜色 透明
-        webView.setBackgroundColor(Color.argb(0, 0, 0, 0));
-        // 设置可以支持缩放
-        webView.getSettings().setSupportZoom(true);
-        // 设置缓存模式
-        webView.getSettings().setAppCacheEnabled(true);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        // //添加Javascript调用java对象
-        webView.getSettings().setJavaScriptEnabled(true);
-        // 设置出现缩放工具
-        webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setDisplayZoomControls(false);
-        // 扩大比例的缩放设置此属性，可任意比例缩放。
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setBlockNetworkImage(false);
-        // 不启用硬件加速
-        webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        // 自适应屏幕
-        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        WebSettings setting=webView.getSettings();
+        setting.setJavaScriptEnabled(true);
+        setting.setJavaScriptCanOpenWindowsAutomatically(true);//允许js弹出窗口
+        setting.setBuiltInZoomControls(true); // 原网页基础上缩放
+        setting.setUseWideViewPort(true);
+        setting.setSupportZoom(true);//支持缩放
+        //设置 缓存模式
+        setting.setCacheMode(WebSettings.LOAD_DEFAULT);
+        setting.setLoadWithOverviewMode(true);
+        setting.setDomStorageEnabled(true);
+        setting.setBlockNetworkImage(false);
+        setting.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        setting.setBlockNetworkLoads(false);
+        setting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//支持内容重新布局
+        this.setVerticalScrollBarEnabled(false);
+        this.setHorizontalScrollBarEnabled(false);// 水平不显示
+        this.setVerticalScrollBarEnabled(false); // 垂直不显示
+        setPageCacheCapacity(setting);
         //不设置将调用手机浏览器
         setClient();
         //设置加载地址
@@ -78,6 +76,33 @@ public class ZWebView extends RelativeLayout{
         //设置进度条颜色（渐变的）
         setProgressDrawable();
 
+    }
+
+    /**
+     * add by zhsf @2015-11-10 当进行goBack的时候 使用前一个页面的缓存 避免每次都重新载入
+     *
+     * @param webSettings webView的settings
+     */
+    protected void setPageCacheCapacity(WebSettings webSettings) {
+        try {
+            Class<?> c = Class.forName("android.webkit.WebSettingsClassic");
+            if (null != c) {
+                Method tt = c.getMethod("setPageCacheCapacity", new Class[]{int.class});
+                if (null != tt) {
+                    tt.invoke(webSettings, 5);
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setProgressDrawable() {

@@ -51,7 +51,7 @@ public class ZWebView extends RelativeLayout{
         pg= (ProgressBar) view.findViewById(R.id.pg);
         // 设置编码
         webView.getSettings().setDefaultTextEncodingName("utf-8");
-        webView.getSettings().setTextZoom(70);
+        webView.getSettings().setTextZoom(100);
         // 设置背景颜色 透明
         webView.setBackgroundColor(Color.argb(0, 0, 0, 0));
         // 设置可以支持缩放

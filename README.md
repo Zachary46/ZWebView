@@ -1,4 +1,5 @@
 # ZWebView
+[![](https://img.shields.io/badge/build-success-green.svg)](https://github.com/Zachary46/ZWebView)
 ### 一个支持H5调起微信、支付宝、QQ的Webview
 # 添加依赖
 `compile 'com.github.Zachary46:ZWebView:v1.1'`
